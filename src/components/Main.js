@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
+import './Main.css';
+
 
 class Main extends Component {
 
   render() {
     return (
       <div id="content">
+        
         <h1>Add Product</h1>
         <form onSubmit={(event) => {
           event.preventDefault()
@@ -12,7 +15,7 @@ class Main extends Component {
           const price = window.web3.utils.toWei(this.productPrice.value.toString(), 'Ether')
           this.props.createProduct(name, price)
           }}>
-          <div className="form-group mr-sm-2">
+          <div className="form-group mr-sm-2 color-primary">
             <input
               id="productName"
               type="text"
@@ -24,7 +27,7 @@ class Main extends Component {
           <div className="form-group mr-sm-2">
             <input
               id="productPrice"
-              type="text"
+              type="number"
               ref={(input) => { this.productPrice = input }}
               className="form-control"
               placeholder="Product Price"
@@ -33,7 +36,7 @@ class Main extends Component {
           <button type="submit" className="btn btn-primary">Add Product</button>
         </form>
         <p>&nbsp;</p>
-        <h2>Buy Product</h2>
+        <h1>Buy Product</h1>
         <table className="table">
           <thead>
             <tr>
@@ -51,10 +54,11 @@ class Main extends Component {
                   <th scope="row">{product.id.toString()}</th>
                   <td>{product.name}</td>
                   <td>{window.web3.utils.fromWei(product.price.toString(), 'Ether')} Eth</td>
-                  <td>{product.owner}</td>
+                  <td>{(product.owner === this.props.account)? "You": product.owner}</td>
                   <td>
                     { (product.owner !== this.props.account)
                       ? <button
+                          className="material-bubble"
                           name={product.id}
                           value={product.price}
                           onClick={(event) => {

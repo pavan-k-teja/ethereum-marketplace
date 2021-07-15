@@ -11,8 +11,9 @@ A place to exchange ownership of virtual products.
 * Download or clone these files to your local machine.
 * Run `npm install -g truffle@5.0.5`
 * Run `npm i`
-* Setup your blockchain on ganache and setup metamask extension on browser.
+* Setup your blockchain on ganache and setup metamask extension on favourite browser.
 * Add `truffle-config.js` file to ganache to create workspace.
+* Run `truffle migrate`
 * Connect your local blockchain to metamask.
 * Run `npm start`
 * Select your account and start adding products.
