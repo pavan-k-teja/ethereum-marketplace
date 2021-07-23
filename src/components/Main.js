@@ -122,7 +122,7 @@ class Main extends Component {
           </div>
           <button
             type="submit"
-            className="btn btn-outline-primary font-weight-bold"
+            className="mb-3 btn btn-outline-primary font-weight-bold"
           >
             Add Product
           </button>
@@ -170,14 +170,15 @@ class Main extends Component {
           </tbody>
         </table>
 
-        <button
-          type="submit"
-          className="btn btn-outline-primary font-weight-bold"
-          onClick={this.handleSubmit}
-        >
-          Save Changes
-        </button>
-
+        {
+          (yours.length!==0) && <button
+            type="submit"
+            className="mt-0 mb-3 btn btn-outline-primary font-weight-bold"
+            onClick={this.handleSubmit}
+          >
+            Save Changes
+          </button>
+        }
         <p>&nbsp;</p>
         <h1>Buy Products</h1>
         <table className="table">

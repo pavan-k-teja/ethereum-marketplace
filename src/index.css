@@ -1,6 +1,7 @@
-/* body {
-    background-color: #0b0c10;
-} */
+
+html {
+  overflow: auto;
+}
 
 body {
     background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
@@ -11,6 +12,7 @@ body {
     justify-content: center;
     color: #c5c6c7;
     background-attachment: fixed;
+    overflow-y: scroll;
   }
   .night {
     position: relative;

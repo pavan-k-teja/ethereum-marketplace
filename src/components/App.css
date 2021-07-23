@@ -55,3 +55,76 @@
     box-shadow: 0 2.5em 0 0;
   }
 }
+
+.table {
+  margin-bottom: 0rem;
+}
+
+
+
+.scrollbar
+{
+	margin-left: 30px;
+	float: left;
+	height: 300px;
+	width: 65px;
+	background: #F5F5F5;
+	overflow-y: scroll;
+	margin-bottom: 25px;
+}
+
+.force-overflow
+{
+	min-height: 450px;
+}
+
+#wrapper
+{
+	text-align: center;
+	width: 500px;
+	margin: auto;
+}
+
+/*
+ *  Style scrollbar
+ */
+
+ 
+::-webkit-scrollbar
+{
+  width: 10px;
+  height: 50px;
+  background-color: #00000000;
+}
+
+::-webkit-scrollbar-track
+{
+  margin-top: 8vh;
+  margin-bottom: 2px;
+  -webkit-box-shadow: inset 0 0 10px rgba(0,0,0,0.3);
+  background-color: #00000000;
+  -webkit-border-radius: 10px;
+}
+    
+::-webkit-scrollbar-thumb
+{
+	background-color: #666;
+  -webkit-border-radius: 10px;
+}
+
+/* Scrollbar Styling */
+/* ::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #ebebeb;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  background: #6d6d6d; 
+} */

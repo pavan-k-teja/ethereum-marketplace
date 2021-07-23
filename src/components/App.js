@@ -107,6 +107,7 @@ class App extends Component {
   render() {
     return (
       <div>
+          
         <div className="night">
           <div className="shooting_star"></div>
           <div className="shooting_star"></div>
