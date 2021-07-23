@@ -1,0 +1,28 @@
+const [yours, setYours] = useState([]);
+    const [more, setMore] = useState([]);
+    {
+      this.props.products.map((product) => {
+
+        if(product.owner === this.props.account)
+        {
+          setYours( (prevYours) => {
+            return(
+                [
+                  ...prevYours, product
+                ]
+            );
+          })
+        }
+        else
+        {
+          setMore( (prevMore) => {
+            return(
+                [
+                  ...prevMore, product
+                ]
+            );
+          })
+        }
+        return 1;
+      })
+    }
