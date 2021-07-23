@@ -65,6 +65,7 @@ class App extends Component {
 
     this.createProduct = this.createProduct.bind(this);
     this.purchaseProduct = this.purchaseProduct.bind(this);
+    this.changeSellable = this.changeSellable.bind(this);
   }
 
   createProduct(name, price) {
@@ -87,6 +88,18 @@ class App extends Component {
       .once("receipt", (receipt) => {
         this.setState({ loading: false });
         alert("Please reload the site");
+      });
+    
+  }
+
+  changeSellable(products) {
+    this.setState({ loading: true });
+    this.state.marketplace.methods
+      .changeSellable(products)
+      .send({ from: this.state.account })
+      .once("receipt", (receipt) => {
+        this.setState({ loading: false });
+        // window.alert("Please reload the site");
       });
     
   }
@@ -129,10 +142,12 @@ class App extends Component {
                 </div>
               ) : (
                 <Main
+                  
                   account={this.state.account}
                   products={this.state.products}
                   createProduct={this.createProduct}
                   purchaseProduct={this.purchaseProduct}
+                  changeProduct={this.changeSellable}
                 />
               )}
             </main>

@@ -1,3 +1,4 @@
+
 pragma solidity >=0.4.21 <0.6.0;
 
 contract Marketplace {
@@ -12,6 +13,7 @@ contract Marketplace {
         uint price;
         address payable owner;
         bool isPurchased;
+        bool isSellable;
     }
 
     event ProductCreated(
@@ -19,7 +21,8 @@ contract Marketplace {
         string name,
         uint price,
         address payable owner,
-        bool isPurchased
+        bool isPurchased,
+        bool isSellable
     );
 
     event ProductPurchased(
@@ -27,11 +30,16 @@ contract Marketplace {
         string name,
         uint price,
         address payable owner,
-        bool isPurchased
+        bool isPurchased,
+        bool isSellable
+    );
+
+    event changedSellable(
+        uint[] idList
     );
 
     constructor() public {
-        name = "K Pavan Sai Teja";
+        
     }
 
     function createProduct(string memory _name, uint _price) public{
@@ -43,8 +51,8 @@ contract Marketplace {
         require(_price > 0);
         
         productCount++;
-        products[productCount] = Product(productCount, _name, _price, msg.sender, false);
-        emit ProductCreated(productCount, _name, _price, msg.sender, false);
+        products[productCount] = Product(productCount, _name, _price, msg.sender, false, true);
+        emit ProductCreated(productCount, _name, _price, msg.sender, false, true);
     }
 
     function purchaseProduct(uint _id) public payable {
@@ -55,7 +63,7 @@ contract Marketplace {
         address payable _seller = _product.owner;
 
         //is product valid
-        require(_product.id > 0 && _product.id <= productCount);
+        require(_product.id > 0 && _product.id <= productCount && _product.isSellable == true);
 
         // Require that there is enough Ether in the transaction
         require(msg.value >= _product.price);
@@ -69,12 +77,31 @@ contract Marketplace {
         //purchase
         _product.owner=msg.sender;
         _product.isPurchased=true;
+        _product.isSellable=true;
         products[_id] = _product;
 
         address(_seller).transfer(msg.value);
         //trigger event
-        emit ProductPurchased(productCount, _product.name, _product.price, msg.sender, true);
+        emit ProductPurchased(productCount, _product.name, _product.price, msg.sender, true, true);
     }
 
+    function changeSellable_individial(uint _id) public{
+
+        //fetch the product
+        Product memory _product = products[_id];
+
+        //is owner changing sellable
+        require(_product.owner == msg.sender);
+
+        _product.isSellable = !_product.isSellable;
+        products[_id] = _product;
+    }
+
+    function changeSellable(uint[] memory idList) public {
+        
+        for(uint i=0; i< idList.length; i++)
+            changeSellable_individial(idList[i]);
+        emit changedSellable(idList);
+    }
 
 }
