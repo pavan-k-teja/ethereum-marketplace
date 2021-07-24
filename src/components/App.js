@@ -15,6 +15,18 @@ class App extends Component {
     if (window.ethereum) {
       window.web3 = new Web3(window.ethereum);
       await window.ethereum.enable();
+
+
+      window.ethereum.on('accountsChanged', 
+        ()=> {
+          // alert("Reload")
+          window.location.reload();
+        }
+      );
+
+      window.ethereum.on('networkChanged', function(networkId){
+        console.log('networkChanged',networkId);
+      });
     } else if (window.web3) {
       window.web3 = new Web3(window.web3.currentProvider);
     } else {
@@ -73,11 +85,9 @@ class App extends Component {
     this.state.marketplace.methods
       .createProduct(name, price)
       .send({ from: this.state.account })
-      .once("receipt", (receipt) => {
-        this.setState({ loading: false });
-        alert("Please reload the site");
-      });
-    
+      .on('confirmation', (reciept) => {
+        window.location.reload()
+      })
   }
 
   purchaseProduct(id, price) {
@@ -85,10 +95,9 @@ class App extends Component {
     this.state.marketplace.methods
       .purchaseProduct(id)
       .send({ from: this.state.account, value: price })
-      .once("receipt", (receipt) => {
-        this.setState({ loading: false });
-        alert("Please reload the site");
-      });
+      .on('confirmation', (reciept) => {
+        window.location.reload()
+      })
     
   }
 
@@ -97,14 +106,14 @@ class App extends Component {
     this.state.marketplace.methods
       .changeSellable(products)
       .send({ from: this.state.account })
-      .once("receipt", (receipt) => {
-        this.setState({ loading: false });
-        // window.alert("Please reload the site");
-      });
+      .on('confirmation', (reciept) => {
+        window.location.reload()
+      })
     
   }
 
   render() {
+    
     return (
       <div>
           
