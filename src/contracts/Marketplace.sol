@@ -12,7 +12,6 @@ contract Marketplace {
         string name;
         uint price;
         address payable owner;
-        bool isPurchased;
         bool isSellable;
     }
 
@@ -21,7 +20,6 @@ contract Marketplace {
         string name,
         uint price,
         address payable owner,
-        bool isPurchased,
         bool isSellable
     );
 
@@ -30,7 +28,6 @@ contract Marketplace {
         string name,
         uint price,
         address payable owner,
-        bool isPurchased,
         bool isSellable
     );
 
@@ -51,8 +48,8 @@ contract Marketplace {
         require(_price > 0);
         
         productCount++;
-        products[productCount] = Product(productCount, _name, _price, msg.sender, false, true);
-        emit ProductCreated(productCount, _name, _price, msg.sender, false, true);
+        products[productCount] = Product(productCount, _name, _price, msg.sender, false);
+        emit ProductCreated(productCount, _name, _price, msg.sender, false);
     }
 
     function purchaseProduct(uint _id) public payable {
@@ -68,21 +65,17 @@ contract Marketplace {
         // Require that there is enough Ether in the transaction
         require(msg.value >= _product.price);
 
-        // Require that the product has not been purchased already
-        require(!_product.isPurchased);
-
         // Require that the buyer is not the seller
         require(_seller != msg.sender);
 
         //purchase
         _product.owner=msg.sender;
-        _product.isPurchased=true;
-        _product.isSellable=true;
+        _product.isSellable=false;
         products[_id] = _product;
 
         address(_seller).transfer(msg.value);
         //trigger event
-        emit ProductPurchased(productCount, _product.name, _product.price, msg.sender, true, true);
+        emit ProductPurchased(productCount, _product.name, _product.price, msg.sender, false);
     }
 
     function changeSellable_individial(uint _id) public{

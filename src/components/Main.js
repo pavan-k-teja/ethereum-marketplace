@@ -17,9 +17,8 @@ class Main extends Component {
       }
     });
 
-
     this.state = {
-      sellable: isSellableList
+      sellable: isSellableList,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -27,16 +26,14 @@ class Main extends Component {
   }
 
   handleChange(event) {
-
-    let id=(event.target.name);
-    let isSellableList = (this.state.sellable);
-    isSellableList[id] = !((this.state.sellable)[id])
+    let id = event.target.name;
+    let isSellableList = this.state.sellable;
+    isSellableList[id] = !this.state.sellable[id];
 
     this.setState({
-      sellable: isSellableList
-    })
-    console.log(this.state.sellable[id])
-
+      sellable: isSellableList,
+    });
+    console.log(this.state.sellable[id]);
   }
 
   handleSubmit(event) {
@@ -45,15 +42,12 @@ class Main extends Component {
 
     this.props.products.map((product) => {
       if (product.owner === this.props.account) {
-        
-        if(this.state.sellable[product.id] !== product.isSellable)
-
+        if (this.state.sellable[product.id] !== product.isSellable)
           changed.push(product.id);
-          
       }
     });
 
-    this.props.changeProduct(changed)
+    this.props.changeProduct(changed);
 
     // alert('A name was submitted: ' + this.state.value);
   }
@@ -64,8 +58,6 @@ class Main extends Component {
   // }));
   // }
   render() {
-    
-
     let yours = [];
     let more = [];
     let isSellableList = [];
@@ -73,9 +65,7 @@ class Main extends Component {
       if (product.owner === this.props.account) {
         yours.push(product);
         isSellableList.push([product.id, product.isSellable]);
-      }
-      else if(product.isSellable === true)
-        more.push(product);
+      } else if (product.isSellable === true) more.push(product);
     });
 
     // const handleSaveChange = (e) => {};
@@ -129,56 +119,65 @@ class Main extends Component {
         </form>
         <p>&nbsp;</p>
         <h1>Your Products</h1>
-        <table className="table">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Name</th>
-              <th scope="col">Price</th>
-              <th scope="col">Sell</th>
-              <th scope="col"></th>
-            </tr>
-          </thead>
-          <tbody id="productList">
-            {yours.map((product, key) => {
-              return (
-                <tr key={key}>
-                  <th scope="row">{key + 1}</th>
-                  <td>{product.name}</td>
-                  <td>
-                    {window.web3.utils.fromWei(
-                      product.price.toString(),
-                      "Ether"
-                    )}{" "}
-                    Eth
-                  </td>
-                  <td>
-                    <label className="switch">
-                      <input
-                        type="checkbox"
-                        name={product.id}
-                        value={product.isSellable}
-                        onChange={(e)=>{this.handleChange(e)}}
-                        checked={this.state.sellable[product.id]}
-                      />
-                      <span className="slider round"></span>
-                    </label>
-                  </td>
+        {yours.length !== 0 ? (
+          <div>
+            <table className="table">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Price</th>
+                  <th scope="col">Sell</th>
+                  <th scope="col"></th>
                 </tr>
-              );
-            })}
-          </tbody>
-        </table>
+              </thead>
+              <tbody id="productList">
+                {yours.map((product, key) => {
+                  return (
+                    <tr key={key}>
+                      <th scope="row">{key + 1}</th>
+                      <td>{product.name}</td>
+                      <td>
+                        {window.web3.utils.fromWei(
+                          product.price.toString(),
+                          "Ether"
+                        )}{" "}
+                        Eth
+                      </td>
+                      <td>
+                        <label className="switch">
+                          <input
+                            type="checkbox"
+                            name={product.id}
+                            value={product.isSellable}
+                            onChange={(e) => {
+                              this.handleChange(e);
+                            }}
+                            checked={this.state.sellable[product.id]}
+                          />
+                          <span className="slider round"></span>
+                        </label>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
 
-        {
-          (yours.length!==0) && <button
-            type="submit"
-            className="mt-0 mb-3 btn btn-outline-primary font-weight-bold"
-            onClick={this.handleSubmit}
-          >
-            Save Changes
-          </button>
-        }
+            <button
+              type="submit"
+              className="mt-0 mb-3 btn btn-outline-primary font-weight-bold"
+              onClick={this.handleSubmit}
+            >
+              Save Changes
+            </button>
+          </div>
+        ) : (
+          <div>
+            <hr style={{ border: "1px solid white" }} />
+            <h4>You have no products in the marketplace.</h4>
+          </div>
+        )}
         <p>&nbsp;</p>
         <h1>Buy Products</h1>
         <table className="table">
