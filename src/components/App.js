@@ -88,6 +88,9 @@ class App extends Component {
       .on('confirmation', (reciept) => {
         window.location.reload()
       })
+      .on('error', (reciept) => {
+        window.location.reload()
+      })
   }
 
   purchaseProduct(id, price) {
@@ -95,7 +98,10 @@ class App extends Component {
     this.state.marketplace.methods
       .purchaseProduct(id)
       .send({ from: this.state.account, value: price })
-      .on('confirmation', (reciept) => {
+      .on('confirmation', () => {
+        window.location.reload()
+      })
+      .on('error', () => {
         window.location.reload()
       })
     
@@ -106,7 +112,10 @@ class App extends Component {
     this.state.marketplace.methods
       .changeSellable(products)
       .send({ from: this.state.account })
-      .on('confirmation', (reciept) => {
+      .on('confirmation', () => {
+        window.location.reload()
+      })
+      .on('error', () => {
         window.location.reload()
       })
     

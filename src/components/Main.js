@@ -103,6 +103,8 @@ class Main extends Component {
             <input
               id="productPrice"
               type="number"
+              step="0.000000000000001"
+              min="0.000000000000001"
               ref={(input) => {
                 this.productPrice = input;
               }}
